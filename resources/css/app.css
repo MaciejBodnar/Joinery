@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@source "../../app/**/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+a {
+	text-decoration: none !important;
+}
+
+
+@layer components {
+  .contact-form-wrap .wpcf7 {
+    width: 100%;
+  }
+
+  .ja-contact-form {
+    width: 100%;
+  }
+
+  .ja-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* @screen md {
+    .ja-form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  } */
+
+  .ja-contact-form label {
+    display: block;
+    color: #1f1f1f;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .ja-contact-form label > span {
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .ja-input,
+  .ja-textarea {
+    width: 100%;
+    border: 1px solid #d7d7d7;
+    background: transparent;
+    color: #1f1f1f;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .ja-input {
+    height: 4.25rem;
+    padding: 0 1.25rem;
+  }
+
+  .ja-textarea {
+    min-height: 14rem;
+    resize: vertical;
+    padding: 1.25rem;
+  }
+
+  .ja-input:focus,
+  .ja-textarea:focus {
+    border-color: #fcba59;
+  }
+
+  .ja-form-message {
+    margin-top: 2rem;
+  }
+
+  .ja-form-consent {
+    margin-top: 1.5rem;
+    color: #1f1f1f;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .ja-form-consent .wpcf7-list-item {
+    margin: 0;
+  }
+
+  .ja-form-consent label {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .ja-form-consent input[type='checkbox'] {
+    margin-top: 0.25rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: 0 0 auto;
+    border: 1px solid #d7d7d7;
+    accent-color: #fcba59;
+  }
+
+  .ja-submit {
+    margin-top: 1.75rem;
+    height: 3.75rem;
+    min-width: 14rem;
+    background: #fcba59;
+    color: #541d23;
+    border: 0;
+    cursor: pointer;
+    font-size: 1.125rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .ja-submit:hover {
+    opacity: 0.9;
+  }
+
+  .contact-form-wrap .wpcf7-spinner {
+    margin-left: 1rem;
+  }
+
+  .contact-form-wrap .wpcf7-not-valid-tip {
+    margin-top: 0.5rem;
+    color: #541d23;
+    font-size: 0.875rem;
+  }
+
+  .contact-form-wrap .wpcf7-response-output {
+    margin: 2rem 0 0;
+    padding: 1rem 1.25rem;
+    border-color: #fcba59;
+    color: #541d23;
+  }
+}
