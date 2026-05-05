@@ -2,24 +2,56 @@
     @php
         $logo = asset('images/joinery-logo.svg')->uri();
 
-        $whatWeDoItems = [
-            [
-                'label' => 'Commercial Projects',
-                'url' => home_url('/commercial-projects'),
-            ],
-            [
-                'label' => 'Timber Construction',
-                'url' => home_url('/timber-construction'),
-            ],
-            [
-                'label' => 'Outdoor Joinery & Decking',
-                'url' => home_url('/outdoor-joinery-decking'),
-            ],
-            [
-                'label' => 'Interior Joinery & Finishing',
-                'url' => home_url('/interior-joinery-finishing'),
-            ],
-        ];
+        // Get menu items from WordPress
+        $menuLocations = get_nav_menu_locations();
+        $primaryMenuId = $menuLocations['primary_navigation'] ?? null;
+
+        $menuItems = [];
+        $whatWeDoItems = [];
+
+        if ($primaryMenuId) {
+            $items = wp_get_nav_menu_items($primaryMenuId) ?: [];
+            $itemsById = [];
+
+            // Build a map of items by ID
+            foreach ($items as $item) {
+                $itemsById[$item->ID] = $item;
+            }
+
+            // Get top-level items and find "What we do" children
+            foreach ($items as $item) {
+                if ($item->menu_item_parent == 0) {
+                    $menuItems[] = $item;
+                } else {
+                    // Check if parent is "What we do"
+                    if (
+                        isset($itemsById[$item->menu_item_parent]) &&
+                        $itemsById[$item->menu_item_parent]->title === 'What we do'
+                    ) {
+                        $whatWeDoItems[] = $item;
+                    }
+                }
+            }
+        }
+
+        // Fallback if no menu is assigned
+        if (empty($menuItems)) {
+            $menuItems = [
+                (object) ['title' => 'Home', 'url' => home_url('/'), 'menu_item_parent' => 0],
+                (object) ['title' => 'About us', 'url' => home_url('/about'), 'menu_item_parent' => 0],
+                (object) ['title' => 'What we do', 'url' => '#', 'menu_item_parent' => 0],
+                (object) ['title' => 'Gallery', 'url' => home_url('/gallery'), 'menu_item_parent' => 0],
+                (object) ['title' => 'FAQ', 'url' => home_url('/faq'), 'menu_item_parent' => 0],
+                (object) ['title' => 'Contact', 'url' => home_url('/contact'), 'menu_item_parent' => 0],
+            ];
+
+            $whatWeDoItems = [
+                (object) ['title' => 'Commercial Projects', 'url' => home_url('/commercial-projects')],
+                (object) ['title' => 'Timber Construction', 'url' => home_url('/timber-construction')],
+                (object) ['title' => 'Outdoor Joinery & Decking', 'url' => home_url('/outdoor-joinery-decking')],
+                (object) ['title' => 'Interior Joinery & Finishing', 'url' => home_url('/interior-joinery-finishing')],
+            ];
+        }
     @endphp
 
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -67,59 +99,53 @@
             </div>
 
             {{-- Center logo --}}
-            <a href="{{ home_url('/') }}" class="absolute left-1/2 top-6 md:top-9 -translate-x-1/2 block"
+            <a href="{{ home_url('/') }}" class="flex justify-center w-full"
                 aria-label="{{ get_bloginfo('name') }} home">
-                <img src="{{ $logo }}" alt="{{ get_bloginfo('name') }}"
-                    class="w-30 md:w-37.5 lg:w-41.25 h-auto">
+                <img src="{{ get_theme_file_uri('resources/images/logo.svg') }}" alt="{{ get_bloginfo('name') }}"
+                    class="w-21.5 h-auto">
             </a>
 
             {{-- Desktop navigation --}}
             <nav
-                class="hidden md:flex absolute left-1/2 bottom-10 -translate-x-1/2 items-center gap-24 text-xl text-white/90">
-                <div class="flex items-center gap-12">
-                    <a href="{{ home_url('/') }}" class="hover:text-[#FCBA59] transition">
-                        Home
-                    </a>
+                class="mx-20 hidden md:flex absolute w-full md:justify-between bottom-10 items-center gap-46.5 text-xl text-white/90">
+                <div class="flex items-center gap-6">
+                    @foreach (array_slice($menuItems, 0, 3) as $item)
+                        @if ($item->title === 'What we do')
+                            {{-- Not clickable, only opens dropdown --}}
+                            <div class="relative group min-w-28 ">
+                                <button type="button" class="min-w-28 cursor-default hover:text-[#FCBA59] transition"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    {{ $item->title }}
+                                </button>
 
-                    <a href="{{ home_url('/about') }}" class="hover:text-[#FCBA59] transition">
-                        About
-                    </a>
+                                <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-1/2 top-full mt-5 w-[320px] -translate-x-1/2 bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
+                                    role="dialog" aria-label="What we do">
+                                    <div class="h-1 bg-[#FCBA59]"></div>
 
-                    {{-- Not clickable, only opens dropdown --}}
-                    <div class="relative group">
-                        <button type="button" class="cursor-default hover:text-[#FCBA59] transition"
-                            aria-haspopup="true" aria-expanded="false">
-                            What we do
-                        </button>
-
-                        <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-1/2 top-full mt-5 w-[320px] -translate-x-1/2 bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
-                            role="dialog" aria-label="What we do">
-                            <div class="h-1 bg-[#FCBA59]"></div>
-
-                            <div class="py-3">
-                                @foreach ($whatWeDoItems as $item)
-                                    <a href="{{ $item['url'] }}"
-                                        class="block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
-                                        {{ $item['label'] }}
-                                    </a>
-                                @endforeach
+                                    <div class="py-3">
+                                        @foreach ($whatWeDoItems as $subItem)
+                                            <a href="{{ $subItem->url }}"
+                                                class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
+                                                {{ $subItem->title }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        @else
+                            <a href="{{ $item->url }}" class="hover:text-[#FCBA59] transition min-w-28">
+                                {{ $item->title }}
+                            </a>
+                        @endif
+                    @endforeach
                 </div>
 
-                <div class="flex items-center gap-12">
-                    <a href="{{ home_url('/gallery') }}" class="hover:text-[#FCBA59] transition">
-                        Gallery
-                    </a>
-
-                    <a href="{{ home_url('/faq') }}" class="hover:text-[#FCBA59] transition">
-                        FAQ
-                    </a>
-
-                    <a href="{{ home_url('/contact') }}" class="hover:text-[#FCBA59] transition">
-                        Contact
-                    </a>
+                <div class="flex items-center gap-6">
+                    @foreach (array_slice($menuItems, 3) as $item)
+                        <a href="{{ $item->url }}" class="min-w-28 hover:text-[#FCBA59] transition">
+                            {{ $item->title }}
+                        </a>
+                    @endforeach
                 </div>
             </nav>
 
@@ -140,43 +166,31 @@
     {{-- Mobile menu --}}
     <div class="hidden md:hidden border-t border-white/10 bg-[#541D23]" data-mobile-menu>
         <nav class="px-6 py-6 space-y-1 text-white">
-            <a href="{{ home_url('/') }}" class="block py-3 hover:text-[#FCBA59] transition">
-                Home
-            </a>
+            @foreach ($menuItems as $item)
+                @if ($item->title === 'What we do')
+                    <div class="py-3">
+                        <button type="button"
+                            class="w-full flex items-center justify-between text-left hover:text-[#FCBA59] transition"
+                            data-mobile-submenu-button aria-expanded="false">
+                            <span>{{ $item->title }}</span>
+                            <span aria-hidden="true">+</span>
+                        </button>
 
-            <a href="{{ home_url('/about') }}" class="block py-3 hover:text-[#FCBA59] transition">
-                About
-            </a>
-
-            <div class="py-3">
-                <button type="button"
-                    class="w-full flex items-center justify-between text-left hover:text-[#FCBA59] transition"
-                    data-mobile-submenu-button aria-expanded="false">
-                    <span>What we do</span>
-                    <span aria-hidden="true">+</span>
-                </button>
-
-                <div class="hidden mt-3 ml-4 space-y-1 border-l border-white/10 pl-4" data-mobile-submenu>
-                    @foreach ($whatWeDoItems as $item)
-                        <a href="{{ $item['url'] }}"
-                            class="block py-2 text-sm text-white/70 hover:text-[#FCBA59] transition">
-                            {{ $item['label'] }}
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-
-            <a href="{{ home_url('/gallery') }}" class="block py-3 hover:text-[#FCBA59] transition">
-                Gallery
-            </a>
-
-            <a href="{{ home_url('/faq') }}" class="block py-3 hover:text-[#FCBA59] transition">
-                FAQ
-            </a>
-
-            <a href="{{ home_url('/contact') }}" class="block py-3 hover:text-[#FCBA59] transition">
-                Contact
-            </a>
+                        <div class="hidden mt-3 ml-4 space-y-1 border-l border-white/10 pl-4" data-mobile-submenu>
+                            @foreach ($whatWeDoItems as $subItem)
+                                <a href="{{ $subItem->url }}"
+                                    class="block py-2 text-sm text-white/70 hover:text-[#FCBA59] transition">
+                                    {{ $subItem->title }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ $item->url }}" class="block py-3 hover:text-[#FCBA59] transition">
+                        {{ $item->title }}
+                    </a>
+                @endif
+            @endforeach
         </nav>
     </div>
 </header>

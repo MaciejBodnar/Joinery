@@ -54,8 +54,8 @@
                 {{-- Logo / legal --}}
                 <div class="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-10 items-center">
                     <a href="{{ home_url('/') }}" aria-label="{{ get_bloginfo('name') }} home">
-                        <img src="{{ $footerLogo }}" alt="{{ get_bloginfo('name') }}"
-                            class="w-[150px] md:w-[170px] h-auto">
+                        <img src="{{ get_theme_file_uri('resources/images/logo.svg') }}"
+                            alt="{{ get_bloginfo('name') }}" class="w-37.5 md:w-42.5 h-auto">
                     </a>
 
                     <div class="space-y-7 text-xl">
