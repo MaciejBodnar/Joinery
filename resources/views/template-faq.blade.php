@@ -6,7 +6,7 @@
 
 @section('content')
     @php
-        $faqs = [
+        $defaultFaqs = [
             [
                 'question' => 'Do you take on large-scale commercial projects?',
                 'answer' =>
@@ -33,12 +33,31 @@
                     'Our clients include holiday parks, developers, architects, commercial contractors, hospitality businesses, property managers, and private clients.',
             ],
         ];
+
+        $faqTitle = get_field('faq_title') ?: 'FAQ';
+        $faqsInput = get_field('faqs') ?: [];
+        $faqs = collect($faqsInput)
+            ->map(function ($faq) {
+                return [
+                    'question' => $faq['question'] ?? '',
+                    'answer' => $faq['answer'] ?? '',
+                ];
+            })
+            ->filter(function ($faq) {
+                return $faq['question'] || $faq['answer'];
+            })
+            ->values()
+            ->all();
+
+        if (!$faqs) {
+            $faqs = $defaultFaqs;
+        }
     @endphp
 
     <section class="bg-white py-24 md:py-32 lg:py-40">
         <div class="max-w-5xl mx-auto px-6 lg:px-10">
             <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] text-center text-[#541D23]">
-                FAQ
+                {{ $faqTitle }}
             </h1>
 
             <div class="mt-14 md:mt-20 space-y-5" data-faq-accordion>
