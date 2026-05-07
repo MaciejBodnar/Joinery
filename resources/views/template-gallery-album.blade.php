@@ -18,9 +18,9 @@
     @endphp
 
     <section class="bg-white py-20 md:py-28 lg:py-32">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="md:px-12 lg:px-20 mx-auto px-6">
             <div class="text-center">
-                <p class="text-sm md:text-base font-bold uppercase tracking-[0.08em] text-[#541D23]">
+                <p class="text-xl font-bold uppercase tracking-[0.08em] text-[#541D23]">
                     {{ $eyebrow }}
                 </p>
 
@@ -62,12 +62,12 @@
 
             <div class="mt-16 flex flex-col sm:flex-row justify-center gap-6">
                 <a href="{{ $backCategoryLink }}"
-                    class="inline-flex h-12 min-w-65 items-center justify-center bg-[#FCBA59] px-8 text-[#541D23] transition hover:opacity-90">
+                    class="inline-flex h-12 min-w-65 items-center justify-center bg-[#FCBA59] px-8 text-[#541D23] transition hover:opacity-90 rounded-sm">
                     {{ $backCategoryLabel }}
                 </a>
 
                 <a href="{{ $backGalleryLink }}"
-                    class="inline-flex h-12 min-w-65 items-center justify-center border border-[#FCBA59] px-8 text-[#541D23] transition hover:bg-[#FCBA59]">
+                    class="inline-flex h-12 min-w-65 items-center justify-center border-2 border-[#FCBA59] px-8 text-[#541D23] transition hover:bg-[#FCBA59] rounded-sm">
                     {{ $backGalleryLabel }}
                 </a>
             </div>

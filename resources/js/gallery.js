@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   lightbox.innerHTML = `
     <button
       type="button"
-      class="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center bg-[#FCBA59] text-2xl text-[#541D23]"
+      class="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center text-7xl text-white hover:cursor-pointer hover:scale-110 md:right-8"
       data-gallery-close
       aria-label="Close gallery image"
     >
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <button
       type="button"
-      class="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-[#FCBA59] text-2xl text-[#541D23] md:left-8"
+      class="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center hover:cursor-pointer hover:scale-110 text-7xl text-white md:left-8"
       data-gallery-prev
       aria-label="Previous image"
     >
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <button
       type="button"
-      class="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-[#FCBA59] text-2xl text-[#541D23] md:right-8"
+      class="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center hover:cursor-pointer hover:scale-110 text-7xl text-white md:right-8"
       data-gallery-next
       aria-label="Next image"
     >

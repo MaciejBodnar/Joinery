@@ -62,7 +62,7 @@
 
             <div class="mt-14 md:mt-20 space-y-5" data-faq-accordion>
                 @foreach ($faqs as $faq)
-                    <article class="border border-neutral-200 bg-white transition" data-faq-item>
+                    <article class="border border-neutral-200 bg-white transition rounded-sm" data-faq-item>
                         <button type="button"
                             class="w-full flex items-center justify-between gap-6 px-8 md:px-12 py-6 text-left text-base md:text-lg text-neutral-900"
                             data-faq-button aria-expanded="{{ $loop->first ? 'true' : 'false' }}">
@@ -76,7 +76,7 @@
                         </button>
 
                         <div class="{{ $loop->first ? '' : 'hidden' }} px-8 md:px-12 pb-8" data-faq-panel>
-                            <p class="max-w-3xl md:pl-16 text-base md:text-lg leading-relaxed text-neutral-400">
+                            <p class="max-w-3xl md:pl-8 text-base md:text-lg leading-relaxed text-[#828282]">
                                 {{ $faq['answer'] }}
                             </p>
                         </div>

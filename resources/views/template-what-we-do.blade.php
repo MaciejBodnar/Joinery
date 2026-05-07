@@ -64,8 +64,8 @@
         </section>
 
         <section class="py-16 md:py-20">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
-                <p class="text-sm md:text-base font-bold uppercase tracking-[0.08em] text-[#541D23]">
+            <div class="md:px-12 lg:px-20 mx-auto px-6">
+                <p class="text-xl font-bold uppercase tracking-[0.08em] text-[#541D23]">
                     {{ $serviceEyebrow }}
                 </p>
 
@@ -74,7 +74,7 @@
                 </h1>
 
                 <div
-                    class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 text-neutral-400 text-base md:text-lg leading-relaxed">
+                    class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 text-[#828282] text-base leading-relaxed">
                     <p>{!! nl2br(e($serviceTextLeft)) !!}</p>
                     <p>{!! nl2br(e($serviceTextRight)) !!}</p>
                 </div>
@@ -106,7 +106,7 @@
         </section>
 
         <section class="py-12 md:py-16">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="md:px-12 lg:px-20 mx-auto px-6">
                 <div class="flex justify-center">
                     <a href="{{ $serviceGalleryLink ?: '#' }}"
                         class="inline-flex h-14 w-full max-w-130 items-center justify-center border border-[#FCBA59] text-[#541D23] text-base transition hover:bg-[#FCBA59]">

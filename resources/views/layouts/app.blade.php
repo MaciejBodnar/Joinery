@@ -16,7 +16,6 @@
     <meta property="og:image" content="{{ esc_url(get_theme_file_uri('/resources/images/og.png')) }}">
     @php(do_action('get_header'))
     @php(wp_head())
-    <link rel="stylesheet" href="https://use.typekit.net/svz0fvq.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -220,12 +220,12 @@
 
     <main class="bg-white text-[#541D23]">
         {{-- Hero --}}
-        <section class="relative min-h-130 md:min-h-155 flex items-center justify-center bg-cover bg-center"
+        <section class="relative min-h-130 md:min-h-180 flex items-center justify-center bg-cover bg-center"
             style="background-image: url('{{ $heroImageUrl }}');">
             <div class="absolute inset-0 bg-black/55"></div>
 
             <div class="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
-                <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl uppercase tracking-[0.08em] leading-tight">
+                <h1 class="font-serif text-4xl md:text-6xl uppercase tracking-tight leading-tight">
                     {!! nl2br(e($heroTitle)) !!}
                 </h1>
 
@@ -237,10 +237,10 @@
 
         {{-- Services --}}
         <section class="py-16 md:py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="md:px-12 lg:px-20 mx-auto px-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-12">
                     @foreach ($services as $service)
-                        <article>
+                        <article class="flex flex-col h-full">
                             <div class="aspect-16/6 md:aspect-16/5.5 overflow-hidden">
                                 @if (!empty($service['image_id']))
                                     {!! wp_get_attachment_image($service['image_id'], 'large', false, [
@@ -253,32 +253,36 @@
                                         class="w-full h-full object-cover" loading="lazy">
                                 @endif
                             </div>
+                            <div class="mt-8 flex flex-col gap-8 justify-between flex-1">
+                                <div class="grid grid-cols-1 md:grid-cols-[190px_1fr] gap-5 md:gap-8">
+                                    <h3
+                                        class="text-[#541D23] font-extrabold uppercase tracking-[0.06em] leading-snug text-xl">
+                                        {!! str_replace(' & ', '<br>& ', e($service['title'])) !!}
+                                    </h3>
 
-                            <div class="mt-8 grid grid-cols-1 md:grid-cols-[190px_1fr] gap-5 md:gap-8">
-                                <h2 class="text-[#541D23] uppercase font-bold tracking-[0.06em] leading-snug text-lg">
-                                    {!! str_replace(' & ', '<br>& ', e($service['title'])) !!}
-                                </h2>
+                                    <ul class="space-y-2 text-sm text-neutral-500">
+                                        @foreach ($service['items'] as $item)
+                                            <li class="flex gap-3">
+                                                <span class="text-[#FCBA59] font-bold">✓</span>
+                                                <span class="text-[16px]">{{ $item }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
 
-                                <ul class="space-y-2 text-sm text-neutral-500">
-                                    @foreach ($service['items'] as $item)
-                                        <li class="flex gap-3">
-                                            <span class="text-[#FCBA59] font-bold">✓</span>
-                                            <span>{{ $item }}</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <a href="{{ $service['read_more_link'] ?: '#' }}"
+                                        class="inline-flex items-center justify-center h-12 bg-[#FCBA59] text-[#541D23] text-[16px] font-medium hover:opacity-90 transition rounded-sm">
+                                        {{-- TODO --}}
+                                        Read more
+                                    </a>
 
-                            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <a href="{{ $service['read_more_link'] ?: '#' }}"
-                                    class="inline-flex items-center justify-center h-12 bg-[#FCBA59] text-[#541D23] text-sm font-medium hover:opacity-90 transition">
-                                    Read more
-                                </a>
-
-                                <a href="{{ $service['gallery_link'] ?: '#' }}"
-                                    class="inline-flex items-center justify-center h-12 border border-[#FCBA59] text-[#541D23] text-sm font-medium hover:bg-[#FCBA59] transition">
-                                    View Gallery
-                                </a>
+                                    <a href="{{ $service['gallery_link'] ?: '#' }}"
+                                        class="inline-flex items-center justify-center h-12 border-2 border-[#FCBA59] text-[#541D23] text-[16px] font-medium hover:bg-[#FCBA59] transition rounded-sm ">
+                                        {{-- TODO --}}
+                                        View Gallery
+                                    </a>
+                                </div>
                             </div>
                         </article>
                     @endforeach
@@ -301,17 +305,17 @@
             </div>
 
             <div class="flex items-center">
-                <div class="max-w-md mx-auto px-6 py-20 lg:py-24">
-                    <h2 class="font-serif text-4xl md:text-5xl uppercase tracking-[0.08em] text-[#541D23]">
+                <div class="max-w-xl mx-auto px-6 py-20 lg:py-24">
+                    <h2 class="font-serif text-4xl md:text-6xl uppercase tracking-[0.08em] text-[#541D23]">
                         {{ $aboutTitle }}
                     </h2>
 
-                    <p class="mt-6 text-sm md:text-base leading-relaxed text-neutral-500">
+                    <p class="mt-6 text-[16px] md:text-base leading-relaxed text-neutral-500">
                         {!! nl2br(e($aboutText)) !!}
                     </p>
 
                     <a href="{{ $aboutLink ?: '#' }}"
-                        class="mt-8 inline-flex items-center justify-center h-12 px-14 bg-[#FCBA59] text-[#541D23] text-sm font-medium hover:opacity-90 transition">
+                        class="mt-8 inline-flex items-center justify-center h-12 px-14 bg-[#FCBA59] text-[#541D23] text-[16px] font-medium hover:opacity-90 transition rounded-sm">
                         {{ $aboutButtonLabel }}
                     </a>
                 </div>
@@ -320,19 +324,19 @@
 
         {{-- Reviews --}}
         <section class="bg-[#541D23] py-16 md:py-20">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
-                <h2 class="font-serif text-4xl md:text-5xl uppercase tracking-[0.08em] text-[#FCBA59]">
+            <div class="md:px-12 lg:px-20 mx-auto px-6">
+                <h2 class="font-serif text-4xl md:text-6xl uppercase tracking-[0.08em] text-[#FCBA59]">
                     {{ $reviewsTitle }}
                 </h2>
 
                 <div class="mt-9 grid grid-cols-1 md:grid-cols-3 gap-7">
                     @foreach ($reviews as $review)
-                        <article class="border border-white/10 px-10 py-9 min-h-37.5">
-                            <p class="text-white text-sm md:text-base leading-relaxed">
+                        <article class="border border-white/10 px-10 py-9 min-h-37.5 rounded-sm">
+                            <p class="text-white text-[16px] md:text-base leading-relaxed">
                                 “{{ $review['quote'] }}”
                             </p>
 
-                            <p class="mt-6 text-sm text-white">
+                            <p class="mt-6 text-[16px] text-white">
                                 <span class="text-[#FCBA59]">{{ $review['name'] }}</span>
                                 <span class="text-white/60"> | </span>
                                 <span>{{ $review['location'] }}</span>
@@ -344,7 +348,7 @@
         </section>
 
         {{-- Durability Banner --}}
-        <section class="relative min-h-105 md:min-h-140 flex items-center justify-center bg-cover bg-center"
+        <section class="relative min-h-105 md:min-h-180 flex items-center justify-center bg-cover bg-center"
             style="background-image: url('{{ $durabilityImageUrl }}');">
             <div class="absolute inset-0 bg-black/55"></div>
 
@@ -353,7 +357,7 @@
                     {!! nl2br(e($durabilityTitle)) !!}
                 </h2>
 
-                <p class="mt-7 text-sm md:text-base text-white/80">
+                <p class="mt-7 text-[16px] md:text-base text-white/80">
                     {!! nl2br(e($durabilityText)) !!}
                 </p>
             </div>
@@ -362,31 +366,31 @@
         {{-- FAQ --}}
         <section class="bg-white py-20 md:py-24">
             <div class="max-w-4xl mx-auto px-6">
-                <h2 class="font-serif text-4xl md:text-5xl uppercase tracking-[0.08em] text-center text-[#541D23]">
+                <h2 class="font-serif text-4xl md:text-6xl uppercase tracking-[0.08em] text-center text-[#541D23]">
                     {{ $faqTitle }}
                 </h2>
 
                 <div class="mt-12 space-y-4" data-faq-accordion>
                     @foreach ($faqs as $faq)
-                        <div class="border border-neutral-200 bg-white" data-faq-item>
+                        <article class="border border-neutral-200 bg-white transition rounded-sm" data-faq-item>
                             <button type="button"
-                                class="w-full flex items-center justify-between gap-6 px-7 py-5 text-left text-sm md:text-base text-neutral-900"
+                                class="w-full flex items-center justify-between gap-6 px-8 md:px-12 py-6 text-left text-base md:text-lg text-neutral-900"
                                 data-faq-button aria-expanded="{{ $loop->first ? 'true' : 'false' }}">
                                 <span>{{ $faq['question'] }}</span>
 
                                 <span
-                                    class="text-[#FCBA59] text-xl leading-none transition-transform duration-300 {{ $loop->first ? 'rotate-45' : '' }}"
+                                    class="text-[#FCBA59] text-2xl leading-none transition-transform duration-300 {{ $loop->first ? 'rotate-45' : '' }}"
                                     data-faq-icon aria-hidden="true">
                                     +
                                 </span>
                             </button>
 
-                            <div class="{{ $loop->first ? '' : 'hidden' }} px-7 pb-6" data-faq-panel>
-                                <p class="max-w-2xl text-sm md:text-base leading-relaxed text-neutral-500">
+                            <div class="{{ $loop->first ? '' : 'hidden' }} px-8 md:px-12 pb-8" data-faq-panel>
+                                <p class="max-w-3xl md:pl-8 text-base md:text-lg leading-relaxed text-[#828282]">
                                     {{ $faq['answer'] }}
                                 </p>
                             </div>
-                        </div>
+                        </article>
                     @endforeach
                 </div>
             </div>

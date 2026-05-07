@@ -11,7 +11,7 @@
     @endphp
 
     <section class="bg-white py-20 md:py-28 lg:py-32">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="md:px-12 lg:px-20 mx-auto px-6">
             <h1 class="font-serif text-4xl md:text-5xl uppercase tracking-[0.08em] text-center text-[#541D23]">
                 {{ $eyebrow }}
             </h1>
@@ -41,19 +41,19 @@
 
                             <div class="mt-8 flex items-start justify-between gap-6">
                                 <div>
-                                    <h2 class="text-lg md:text-xl font-bold uppercase tracking-[0.04em] text-[#541D23]">
+                                    <h3 class="text-lg md:text-xl font-bold uppercase tracking-[0.04em] text-[#541D23]">
                                         {{ $title }}
-                                    </h2>
+                                    </h3>
 
                                     @if ($subtitle)
-                                        <p class="mt-1 text-sm md:text-base text-neutral-400">
+                                        <p class="mt-1 text-sm md:text-base text-[#828282]">
                                             {{ $subtitle }}
                                         </p>
                                     @endif
                                 </div>
 
                                 <span
-                                    class="inline-flex h-12 w-12 shrink-0 items-center justify-center bg-[#FCBA59] text-[#541D23] text-2xl transition group-hover:translate-x-1">
+                                    class="inline-flex h-12 w-12 shrink-0 items-center justify-center bg-[#FCBA59] text-[#541D23] text-2xl transition group-hover:translate-x-1 rounded-sm">
                                     →
                                 </span>
                             </div>

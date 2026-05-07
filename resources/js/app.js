@@ -1,4 +1,5 @@
 import './accordion';
+import './gallery';
 
 document.addEventListener('DOMContentLoaded', () => {
   const menuButton = document.querySelector('[data-mobile-menu-button]');

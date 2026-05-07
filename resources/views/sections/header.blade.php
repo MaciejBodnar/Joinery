@@ -70,69 +70,10 @@
     @endphp
 
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
-        <div class="relative min-h-47.5 md:min-h-53.75">
-            <div class="hidden md:grid grid-cols-3 items-center pt-8 text-sm text-white/55">
-                <div class="justify-self-start inline-flex items-center gap-2">
-                    <a href="{{ $headerPhoneLink }}" class="hover:text-[#FCBA59] transition">
-                        <span>{{ $headerPhoneLabel }}</span>
-                    </a>
-                    <span aria-hidden="true">☏</span>
-                    <a href="{{ $headerPhoneLink }}" class="font-semibold tracking-wide hover:text-[#FCBA59] transition">
-                        {{ $headerPhoneNumber }}
-                    </a>
-                </div>
+        <div class="relative min-h-30 md:min-h-53.75">
 
-                <a href="{{ home_url('/') }}" class="flex justify-center w-full"
-                    aria-label="{{ get_bloginfo('name') }} home">
-                    <img src="{{ $headerLogoUrl }}" alt="{{ get_bloginfo('name') }}" class="w-21.5 h-auto">
-                </a>
-
-                <div class="justify-self-end inline-flex items-center gap-6">
-                    <span>{{ $headerSocialLabel }}</span>
-
-                    <div class="inline-flex items-center gap-5">
-                        @if ($headerFacebookUrl)
-                            <a href="{{ $headerFacebookUrl }}" aria-label="Facebook"
-                                class="hover:text-[#FCBA59] transition" target="_blank" rel="noreferrer">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path
-                                        d="M14 8.5V6.25C14 5.56 14.56 5 15.25 5H17V2h-2.5A4.5 4.5 0 0 0 10 6.5v2H7v3h3V22h4V11.5h3l.5-3H14Z" />
-                                </svg>
-                            </a>
-                        @endif
-
-                        @if ($headerInstagramUrl)
-                            <a href="{{ $headerInstagramUrl }}" aria-label="Instagram"
-                                class="hover:text-[#FCBA59] transition" target="_blank" rel="noreferrer">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" aria-hidden="true">
-                                    <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <circle cx="17.5" cy="6.5" r="1"></circle>
-                                </svg>
-                            </a>
-                        @endif
-
-                        @if ($headerTiktokUrl)
-                            <a href="{{ $headerTiktokUrl }}" aria-label="TikTok"
-                                class="hover:text-[#FCBA59] transition" target="_blank" rel="noreferrer">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path
-                                        d="M16.6 5.8a5.5 5.5 0 0 0 3.4 1.1v3.4a8.7 8.7 0 0 1-3.5-.8v6.2a6.3 6.3 0 1 1-6.3-6.3c.4 0 .8 0 1.2.1V13a3 3 0 1 0 2.1 2.9V2h3.1c.2 1.5.9 2.8 2 3.8Z" />
-                                </svg>
-                            </a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="md:hidden flex items-center justify-between min-h-30">
-                <a href="{{ $headerPhoneLink }}" class="text-sm text-white/60 hover:text-[#FCBA59] transition">
-                    {{ $headerPhoneNumber }}
-                </a>
-
-                <a href="{{ home_url('/') }}" class="flex justify-center"
-                    aria-label="{{ get_bloginfo('name') }} home">
+            <div class="md:hidden flex items-center justify-between min-h-30 mx-6">
+                <a href="{{ home_url('/') }}" class="flex justify-center" aria-label="{{ get_bloginfo('name') }} home">
                     <img src="{{ $headerLogoUrl }}" alt="{{ get_bloginfo('name') }}" class="w-18 h-auto">
                 </a>
 
@@ -142,43 +83,62 @@
                 </button>
             </div>
 
-            <nav
-                class="mx-20 hidden md:grid absolute w-full bottom-10 grid-cols-[1fr_auto_1fr] items-center gap-8 text-xl text-white/90">
-                <div class="flex items-center gap-6">
-                    @foreach ($leftNav as $item)
-                        <a href="{{ $item['url'] }}" class="min-w-28 hover:text-[#FCBA59] transition">
-                            {{ $item['label'] }}
+            <nav class="mx-20 hidden md:flex absolute w-full bottom-10 items-center gap-8 text-xl text-white/90">
+                <div class="w-full grid grid-cols-[1fr_200px_1fr] items-center justify-between">
+                    <div class="text-sm text-white/55 flex items-center gap-6 row-1 justify-end">
+                        <a href="{{ $headerPhoneLink }}" class="hover:text-[#FCBA59] transition">
+                            <span>{{ $headerPhoneLabel }}</span>
                         </a>
-                    @endforeach
-                </div>
+                        <span aria-hidden="true">☏</span>
+                        <a href="{{ $headerPhoneLink }}"
+                            class="font-semibold tracking-wide hover:text-[#FCBA59] transition">
+                            {{ $headerPhoneNumber }}
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-6 row-3 justify-end">
+                        @foreach ($leftNav as $item)
+                            <a href="{{ $item['url'] }}" class="min-w-28 hover:text-[#FCBA59] transition">
+                                {{ $item['label'] }}
+                            </a>
+                        @endforeach
 
-                <div class="relative group justify-self-center">
-                    <button type="button" class="min-w-28 cursor-default hover:text-[#FCBA59] transition"
-                        aria-haspopup="true" aria-expanded="false">
-                        {{ $whatWeDoLabel }}
-                    </button>
+                        <div class="relative group">
+                            <button type="button" class="min-w-28 cursor-default hover:text-[#FCBA59] transition"
+                                aria-haspopup="true" aria-expanded="false">
+                                {{ $whatWeDoLabel }}
+                            </button>
 
-                    <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-1/2 top-full mt-5 w-[320px] -translate-x-1/2 bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
-                        role="dialog" aria-label="{{ $whatWeDoLabel }}">
-                        <div class="h-1 bg-[#FCBA59]"></div>
+                            <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full mt-3 w-[320px] bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
+                                role="dialog" aria-label="{{ $whatWeDoLabel }}">
+                                <div class="h-1 bg-[#FCBA59]"></div>
 
-                        <div class="py-3">
-                            @foreach ($whatWeDoItems as $subItem)
-                                <a href="{{ $subItem['url'] }}"
-                                    class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
-                                    {{ $subItem['label'] }}
-                                </a>
-                            @endforeach
+                                <div class="py-3">
+                                    @foreach ($whatWeDoItems as $subItem)
+                                        <a href="{{ $subItem['url'] }}"
+                                            class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
+                                            {{ $subItem['label'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="flex items-center justify-end gap-6">
-                    @foreach ($rightNav as $item)
-                        <a href="{{ $item['url'] }}" class="min-w-28 hover:text-[#FCBA59] transition">
-                            {{ $item['label'] }}
-                        </a>
-                    @endforeach
+                    <a href="{{ home_url('/') }}" class="flex items-center justify-center row-span-3"
+                        aria-label="{{ get_bloginfo('name') }} home">
+                        <img src="{{ $headerLogoUrl }}" alt="{{ get_bloginfo('name') }}" class="w-21.5 h-auto">
+                    </a>
+                    <div class="flex items-center gap-6 row-1 col-start-3 justify-start text-sm text-white/55">
+                        <span>{{ $headerSocialLabel }}</span>
+                        {{-- TODO ADD FOREACH LOOP FOR SOCIAL MEDIA LINKS AWESOME FONTS + URL --}}
+                    </div>
+                    <div class="flex items-center gap-6 row-3 col-start-3">
+                        @foreach ($rightNav as $item)
+                            <a href="{{ $item['url'] }}" class="min-w-28 hover:text-[#FCBA59] transition">
+                                {{ $item['label'] }}
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             </nav>
         </div>
@@ -216,7 +176,10 @@
                 </a>
             @endforeach
 
-            <div class="pt-4 border-t border-white/10 space-y-4 text-sm text-white/70">
+            <div class="pt-4 border-t border-white/10 space-y-4 text-sm text-white/70 flex flex-col">
+                <a href="{{ $headerPhoneLink }}" class="text-sm text-white/60 hover:text-[#FCBA59] transition">
+                    {{ $headerPhoneNumber }}
+                </a>
                 <div class="inline-flex items-center gap-2">
                     <span>{{ $headerSocialLabel }}</span>
                 </div>
@@ -227,8 +190,8 @@
                             target="_blank" rel="noreferrer">Facebook</a>
                     @endif
                     @if ($headerInstagramUrl)
-                        <a href="{{ $headerInstagramUrl }}" aria-label="Instagram"
-                            class="hover:text-white transition" target="_blank" rel="noreferrer">Instagram</a>
+                        <a href="{{ $headerInstagramUrl }}" aria-label="Instagram" class="hover:text-white transition"
+                            target="_blank" rel="noreferrer">Instagram</a>
                     @endif
                     @if ($headerTiktokUrl)
                         <a href="{{ $headerTiktokUrl }}" aria-label="TikTok" class="hover:text-white transition"

@@ -1,7 +1,35 @@
+@import "./typekit.css";
 @import "tailwindcss";
+@theme {
+  --font-sans: "articulat-cf", sans-serif;
+  --font-serif: "cesso", serif;
+  --font-display: "articulat-heavy-cf", sans-serif;
+}
+
 @source "../../app/**/*.php";
 @source "../**/*.blade.php";
 @source "../**/*.js";
+
+body {
+  font-family: "articulat-cf", sans-serif;
+}
+
+h1,
+h2,
+h4,
+h5,
+h6,
+.font-serif {
+  font-family: "cesso", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h3,
+.font-display {
+  font-family: "articulat-cf", sans-serif;
+}
 
 a {
 	text-decoration: none !important;
@@ -20,25 +48,23 @@ a {
   .ja-form-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    column-gap: 2rem;
   }
 
-  /* @screen md {
+  @media (min-width: 768px) {
     .ja-form-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  } */
+  }
 
   .ja-contact-form label {
     display: block;
     color: #1f1f1f;
     font-size: 1.125rem;
-    line-height: 1.75rem;
   }
 
   .ja-contact-form label > span {
     display: block;
-    margin-bottom: 1.5rem;
   }
 
   .ja-input,
@@ -67,12 +93,7 @@ a {
     border-color: #fcba59;
   }
 
-  .ja-form-message {
-    margin-top: 2rem;
-  }
-
   .ja-form-consent {
-    margin-top: 1.5rem;
     color: #1f1f1f;
     font-size: 1.125rem;
     line-height: 1.6;
@@ -124,9 +145,92 @@ a {
   }
 
   .contact-form-wrap .wpcf7-response-output {
-    margin: 2rem 0 0;
-    padding: 1rem 1.25rem;
+    margin: 2rem 0 0 !important;
+    padding: 1rem 1.25rem !important;
+    border-color: #fcba59 !important;
+    color: #541d23 !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+  }
+}
+
+
+@layer components {
+  .ja-callback-cf7 .wpcf7 {
+    width: 100%;
+  }
+
+  .ja-callback-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    /* align-items: center; */
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .ja-callback-form {
+      grid-template-columns: 400px 260px;
+      gap: 1.5rem;
+    }
+  }
+
+  .ja-callback-form p {
+    margin: 0;
+  }
+
+  .ja-callback-input {
+    width: 100%;
+    height: 4rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: transparent;
+    padding: 0 2rem;
+    color: #ffffff;
+    font-size: 1.125rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+    border-radius: 5px;
+  }
+
+  .ja-callback-input::placeholder {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .ja-callback-input:focus {
     border-color: #fcba59;
+  }
+
+  .ja-callback-submit {
+    width: 100%;
+    height: 4rem;
+    border: 0;
+    background: #fcba59;
     color: #541d23;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    border-radius: 5px;
+  }
+
+  .ja-callback-submit:hover {
+    opacity: 0.9;
+  }
+
+  .ja-callback-cf7 .wpcf7-spinner {
+    position: absolute;
+    margin-top: 1rem;
+  }
+
+  .ja-callback-cf7 .wpcf7-not-valid-tip {
+    margin-top: 0.5rem;
+    color: #fcba59;
+    font-size: 0.875rem;
+  }
+
+  .ja-callback-cf7 .wpcf7-response-output {
+    margin: 1.5rem 0 0;
+    padding: 0.875rem 1rem;
+    border-color: #fcba59;
+    color: #ffffff;
   }
 }

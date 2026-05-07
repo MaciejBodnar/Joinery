@@ -49,7 +49,7 @@
         $aboutTitle = get_field('about_title') ?: 'About Us';
         $aboutContent =
             get_field('about_content') ?:
-            'At Joinery Atelier, we provide high-quality carpentry for holiday parks, developers, architects, businesses, property managers, and private clients. From large-scale decking to bespoke interior installations, every project is delivered with precision and reliability. We focus on practical solutions and strict timelines. Our team also offers expert consultancy to refine designs, ensuring every structure is durable, functional, and built to a high standard.';
+            'At Joinery Atelier, we provide high-quality carpentry for holiday parks, developers, architects, businesses, property managers, and private clients. From large-scale decking to bespoke interior installations, every project is delivered with precision and reliability. We focus on practical solutions and strict timelines. Our team also offers expert consultancy to refine designs, ensuring every structure is durable, functional, and built to a high standard. <br><br> We take a straightforward, professional approach to every project. Whether working on a commercial site or a private property, we focus on clear communication, well-organised work, and consistent results. Alongside installation, we provide practical input to help improve designs where needed, ensuring everything is built properly and performs over time.';
         $aboutImage = get_field('about_image');
         $aboutImageId = is_numeric($aboutImage) ? (int) $aboutImage : null;
         $aboutImageUrl = $aboutImageId ? $imageUrl($aboutImageId) : get_theme_file_uri('/resources/images/about.png');
@@ -79,8 +79,8 @@
         <section class="bg-white">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="order-1 flex items-center">
-                    <div class="max-w-2xl px-6 py-16 md:px-12 lg:px-20 lg:py-24">
-                        <p class="text-sm md:text-base font-bold uppercase tracking-[0.08em] text-[#541D23]">
+                    <div class="px-6 py-16 md:px-12 lg:px-20 lg:py-24">
+                        <p class="text-xl font-bold uppercase tracking-[0.08em] text-[#541D23]">
                             {{ $aboutEyebrow }}
                         </p>
 
@@ -89,7 +89,7 @@
                             {{ $aboutTitle }}
                         </h1>
 
-                        <div class="mt-9 space-y-7 text-base md:text-lg leading-relaxed text-neutral-400">
+                        <div class="mt-9 space-y-7 text-base leading-relaxed text-[#828282]">
                             {!! wp_kses_post($aboutContent) !!}
                         </div>
                     </div>
@@ -110,19 +110,20 @@
         </section>
 
         <section class="bg-[#EFEAE8] py-16 md:py-20 lg:py-24">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="md:px-12 lg:px-20 mx-auto px-6">
                 <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] text-[#541D23]">
                     {{ $reviewsTitle }}
                 </h2>
 
                 <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
                     @foreach ($aboutReviews as $review)
-                        <article class="border border-neutral-200 bg-white/30 px-8 md:px-12 py-9 md:py-11 min-h-42.5">
-                            <p class="text-base md:text-lg leading-relaxed text-neutral-400">
+                        <article
+                            class="border border-neutral-200 bg-white/30 px-8 md:px-12 py-9 md:py-11 min-h-42.5 rounded-sm">
+                            <p class="text-base md:text-lg leading-relaxed text-[#828282]">
                                 “{{ $review['quote'] }}”
                             </p>
 
-                            <p class="mt-7 text-base md:text-lg text-neutral-400">
+                            <p class="mt-7 text-base md:text-lg text-[#828282]">
                                 <span class="text-[#FCBA59]">{{ $review['name'] }}</span>
                                 <span class="text-neutral-300"> | </span>
                                 <span>{{ $review['location'] }}</span>
