@@ -888,6 +888,58 @@ class ACFFieldProvider extends SageServiceProvider
             ]);
 
             acf_add_local_field_group([
+                'key' => 'group_privacy_policy_page',
+                'title' => 'Privacy Policy Page',
+                'fields' => [
+                    [
+                        'key' => 'field_privacy_eyebrow',
+                        'label' => 'Privacy Eyebrow',
+                        'name' => 'privacy_eyebrow',
+                        'type' => 'text',
+                        'default_value' => 'Legal',
+                    ],
+                    [
+                        'key' => 'field_privacy_title',
+                        'label' => 'Privacy Title',
+                        'name' => 'privacy_title',
+                        'type' => 'text',
+                        'default_value' => 'Privacy Policy',
+                    ],
+                    [
+                        'key' => 'field_privacy_content',
+                        'label' => 'Privacy Content',
+                        'name' => 'privacy_content',
+                        'type' => 'wysiwyg',
+                        'tabs' => 'all',
+                        'toolbar' => 'full',
+                        'media_upload' => 0,
+                    ],
+                ],
+                'location' => [
+                    [
+                        [
+                            'param' => 'page_template',
+                            'operator' => '==',
+                            'value' => 'template-privacy-policy.php',
+                        ],
+                    ],
+                    [
+                        [
+                            'param' => 'page_template',
+                            'operator' => '==',
+                            'value' => 'template-privacy-policy.blade.php',
+                        ],
+                    ],
+                ],
+                'menu_order' => 0,
+                'position' => 'normal',
+                'style' => 'default',
+                'label_placement' => 'top',
+                'instruction_placement' => 'label',
+                'hide_on_screen' => '',
+            ]);
+
+            acf_add_local_field_group([
                 'key' => 'group_contact_page',
                 'title' => 'Contact Page',
                 'fields' => [

@@ -161,3 +161,35 @@ add_action('widgets_init', function () {
         'id' => 'sidebar-footer',
     ] + $config);
 });
+
+
+add_action('template_redirect', function () {
+    $maintenanceEnabled = defined('JA_MAINTENANCE_MODE') && JA_MAINTENANCE_MODE;
+
+    if (! $maintenanceEnabled) {
+        return;
+    }
+
+    // Każdy zalogowany użytkownik może normalnie oglądać stronę.
+    if (is_user_logged_in()) {
+        return;
+    }
+
+    // Nie blokuj panelu, logowania, AJAX, REST API itd.
+    if (
+        is_admin()
+        || wp_doing_ajax()
+        || wp_doing_cron()
+        || (defined('REST_REQUEST') && REST_REQUEST)
+    ) {
+        return;
+    }
+
+    status_header(503);
+    nocache_headers();
+    header('Retry-After: 3600');
+
+    echo \Roots\view('maintenance')->render();
+
+    exit;
+});

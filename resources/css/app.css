@@ -235,3 +235,64 @@ a {
     color: #ffffff;
   }
 }
+
+@layer components {
+  .ja-privacy-content {
+    color: #8a8a8a;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  @media (min-width: 768px) {
+    .ja-privacy-content {
+      font-size: 1.125rem;
+    }
+  }
+
+  .ja-privacy-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .ja-privacy-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ja-privacy-content strong {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: #541d23;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  @media (min-width: 768px) {
+    .ja-privacy-content strong {
+      font-size: 1.25rem;
+    }
+  }
+
+  .ja-privacy-content a {
+    color: #541d23;
+    text-decoration: underline;
+    text-decoration-color: #fcba59;
+    text-underline-offset: 4px;
+  }
+
+  .ja-privacy-content ul,
+  .ja-privacy-content ol {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .ja-privacy-content ul {
+    list-style: disc;
+  }
+
+  .ja-privacy-content ol {
+    list-style: decimal;
+  }
+
+  .ja-privacy-content li {
+    margin-bottom: 0.75rem;
+  }
+}

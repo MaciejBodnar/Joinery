@@ -7,7 +7,7 @@
     <meta name="description" content="{{ esc_attr(get_bloginfo('description')) }}">
     <meta name="author" content="{{ esc_attr(get_bloginfo('name')) }}">
     <meta name="keywords"
-        content="mortgage, insurance, financial advice, home loans, protection, easy move financial solutions, UK financial services, mortgage advice, insurance advice, home insurance, life insurance, financial planning">
+        content="joinery, bespoke joinery, custom joinery, woodwork, craftsmanship, furniture making, interior design, woodworking services, high-quality joinery, handcrafted woodwork">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="{{ esc_attr(get_bloginfo('name')) }}">
     <meta property="og:description" content="{{ esc_attr(get_bloginfo('description')) }}">
