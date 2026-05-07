@@ -45,9 +45,9 @@
         $footerEmail = $option('footer_email', 'info@yourdomain.com');
         $footerAddress = $option('footer_address', '123 Street Road, POST CODE');
 
-        $footerFacebookUrl = $option('footer_facebook_url');
-        $footerInstagramUrl = $option('footer_instagram_url');
-        $footerTiktokUrl = $option('footer_tiktok_url');
+        $footerSocialLinks = collect(get_field('header_social_media', 'option') ?: [])
+            ->filter(fn($item) => !empty($item['social_icon']) && !empty($item['social_link']))
+            ->values();
     @endphp
 
     <section class="bg-[#541D23] py-20 md:py-28">
@@ -127,7 +127,12 @@
                     @endif
 
                     <div class="flex items-center gap-6 pt-2 text-[#FCBA59]">
-                        {{-- TODO ADD SOCIAL MEDIA AS FOREACH AWESOME FONTS ICON + URL --}}
+                        @foreach ($footerSocialLinks as $socialLink)
+                            <a href="{{ $socialLink['social_link'] }}" aria-label="Social media link"
+                                class="hover:text-[#ffcd82] transition" target="_blank" rel="noreferrer">
+                                {!! $socialLink['social_icon'] !!}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -11,10 +11,10 @@
         $contactEmail = get_field('contact_email') ?: 'info@yourdomain.com';
         $contactAddress = get_field('contact_address') ?: '123 Street Road, POST CODE';
         $contactSocialLabel = get_field('contact_social_label') ?: 'Find us on';
-        $facebookUrl = get_field('facebook_url') ?: '#';
-        $instagramUrl = get_field('instagram_url') ?: '#';
-        $tiktokUrl = get_field('tiktok_url') ?: '#';
         $contactFormShortcode = get_field('contact_form_shortcode') ?: '[contact-form-7 id="98d3aa4" title="Contact"]';
+        $contactSocialLinks = collect(get_field('header_social_media', 'option') ?: [])
+            ->filter(fn($item) => !empty($item['social_icon']) && !empty($item['social_link']))
+            ->values();
     @endphp
 
     <section class="bg-white py-24 md:py-32 lg:py-40">
@@ -48,7 +48,12 @@
                         <span class="text-base">{{ $contactSocialLabel }}</span>
 
                         <div class="flex items-center gap-6 text-[#FCBA59]">
-                            {{-- TODO FOREACH LOOP WITH SOCIALS FROM AWSOME FONTS + URLS --}}
+                            @foreach ($contactSocialLinks as $socialLink)
+                                <a href="{{ $socialLink['social_link'] }}" aria-label="Social media link"
+                                    class="hover:text-[#828282] transition" target="_blank" rel="noreferrer">
+                                    {!! $socialLink['social_icon'] !!}
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 </aside>

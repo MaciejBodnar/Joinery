@@ -67,6 +67,10 @@
             })
             ->filter(fn($item) => $item['label'])
             ->values();
+
+        $headerSocialLinks = collect(get_field('header_social_media', 'option') ?: [])
+            ->filter(fn($item) => !empty($item['social_icon']) && !empty($item['social_link']))
+            ->values();
     @endphp
 
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -130,7 +134,12 @@
                     </a>
                     <div class="flex items-center gap-6 row-1 col-start-3 justify-start text-sm text-white/55">
                         <span>{{ $headerSocialLabel }}</span>
-                        {{-- TODO ADD FOREACH LOOP FOR SOCIAL MEDIA LINKS AWESOME FONTS + URL --}}
+                        @foreach ($headerSocialLinks as $socialLink)
+                            <a href="{{ $socialLink['social_link'] }}" aria-label="Social media link"
+                                class="hover:text-[#FCBA59] text-sm transition" target="_blank" rel="noreferrer">
+                                {!! $socialLink['social_icon'] !!}
+                            </a>
+                        @endforeach
                     </div>
                     <div class="flex items-center gap-6 row-3 col-start-3">
                         @foreach ($rightNav as $item)
