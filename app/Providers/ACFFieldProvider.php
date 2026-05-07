@@ -420,10 +420,24 @@ class ACFFieldProvider extends SageServiceProvider
                                 'type' => 'page_link',
                             ],
                             [
+                                'key' => 'field_services_button_label',
+                                'label' => 'Services Read More Label',
+                                'name' => 'services_button_label',
+                                'type' => 'text',
+                                'default_value' => 'Read more',
+                            ],
+                            [
                                 'key' => 'field_service_gallery_link',
                                 'label' => 'Service Gallery Link',
                                 'name' => 'service_gallery_link',
                                 'type' => 'page_link',
+                            ],
+                            [
+                                'key' => 'field_services_left_button_label',
+                                'label' => 'Services Gallery Label',
+                                'name' => 'services_left_button_label',
+                                'type' => 'text',
+                                'default_value' => 'View Gallery',
                             ],
                         ],
                     ],
@@ -1070,6 +1084,13 @@ class ACFFieldProvider extends SageServiceProvider
                         'name' => 'footer_callback_title',
                         'type' => 'text',
                         'default_value' => 'Leave Your Number',
+                    ],
+                    [
+                        'key' => 'field_footer_callback_description',
+                        'label' => 'Footer Callback Description',
+                        'name' => 'footer_callback_description',
+                        'type' => 'text',
+                        'default_value' => 'We’ll get in touch with you!',
                     ],
                     [
                         'key' => 'field_footer_callback_placeholder',

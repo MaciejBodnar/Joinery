@@ -12,65 +12,33 @@
         $headerPhoneLink = $option('header_phone_link') ?: 'tel:' . preg_replace('/[^0-9+]/', '', $headerPhoneNumber);
 
         $headerSocialLabel = $option('header_social_label', 'Find us on');
-        $headerFacebookUrl = $option('header_facebook_url');
-        $headerInstagramUrl = $option('header_instagram_url');
-        $headerTiktokUrl = $option('header_tiktok_url');
 
-        $leftNav = collect(
-            get_field('header_left_nav', 'option') ?: [
-                ['item_label' => 'Home', 'item_link' => home_url('/')],
-                ['item_label' => 'About us', 'item_link' => home_url('/about')],
-            ],
-        )
-            ->map(function ($item) {
-                return [
-                    'label' => $item['item_label'] ?? '',
-                    'url' => $item['item_link'] ?? '#',
-                ];
-            })
-            ->filter(fn($item) => $item['label'])
-            ->values();
+        // Get menu items - try different approaches
+        $menuItems = [];
+        $locations = get_nav_menu_locations();
 
-        $whatWeDoLabel = $option('header_what_we_do_label', 'What we do');
-        $whatWeDoItems = collect(
-            get_field('header_what_we_do_items', 'option') ?: [
-                ['item_label' => 'Commercial Projects', 'item_link' => home_url('/commercial-projects')],
-                ['item_label' => 'Timber Construction', 'item_link' => home_url('/timber-construction')],
-                ['item_label' => 'Outdoor Joinery & Decking', 'item_link' => home_url('/outdoor-joinery-decking')],
-                [
-                    'item_label' => 'Interior Joinery & Finishing',
-                    'item_link' => home_url('/interior-joinery-finishing'),
-                ],
-            ],
-        )
-            ->map(function ($item) {
-                return [
-                    'label' => $item['item_label'] ?? '',
-                    'url' => $item['item_link'] ?? '#',
-                ];
-            })
-            ->filter(fn($item) => $item['label'])
-            ->values();
+        if (isset($locations['primary_navigation'])) {
+            $menu = wp_get_nav_menu_object($locations['primary_navigation']);
+            if ($menu) {
+                $menuItems = wp_get_nav_menu_items($menu->term_id);
+            }
+        }
 
-        $rightNav = collect(
-            get_field('header_right_nav', 'option') ?: [
-                ['item_label' => 'Gallery', 'item_link' => home_url('/gallery')],
-                ['item_label' => 'FAQ', 'item_link' => home_url('/faq')],
-                ['item_label' => 'Contact', 'item_link' => home_url('/contact')],
-            ],
-        )
-            ->map(function ($item) {
-                return [
-                    'label' => $item['item_label'] ?? '',
-                    'url' => $item['item_link'] ?? '#',
-                ];
-            })
-            ->filter(fn($item) => $item['label'])
-            ->values();
+        // Separate top-level items
+        $topLevelItems = array_filter($menuItems ?: [], fn($item) => $item->menu_item_parent == 0);
+
+        // Split items: first 3 left, rest right
+        $leftItems = array_slice($topLevelItems, 0, 3);
+        $rightItems = array_slice($topLevelItems, 3);
 
         $headerSocialLinks = collect(get_field('header_social_media', 'option') ?: [])
             ->filter(fn($item) => !empty($item['social_icon']) && !empty($item['social_link']))
             ->values();
+
+        // Helper function to get children of an item
+        $getChildren = function ($itemId) use ($menuItems) {
+            return array_filter($menuItems ?: [], fn($item) => $item->menu_item_parent == $itemId);
+        };
     @endphp
 
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -90,42 +58,48 @@
             <nav class="mx-20 hidden md:flex absolute w-full bottom-10 items-center gap-8 text-xl text-white/90">
                 <div class="w-full grid grid-cols-[1fr_200px_1fr] items-center justify-between">
                     <div class="text-sm text-white/55 flex items-center gap-6 row-1 justify-end">
-                        <a href="{{ $headerPhoneLink }}" class="hover:text-[#FCBA59] transition">
-                            <span>{{ $headerPhoneLabel }}</span>
-                        </a>
-                        <span aria-hidden="true">☏</span>
                         <a href="{{ $headerPhoneLink }}"
-                            class="font-semibold tracking-wide hover:text-[#FCBA59] transition">
-                            {{ $headerPhoneNumber }}
+                            class="hover:text-[#FCBA59] transition flex items-center gap-4">
+                            <span>{{ $headerPhoneLabel }}</span>
+
+                            <span aria-hidden="true">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </span>
+                            <span href="{{ $headerPhoneLink }}"
+                                class="font-semibold tracking-wide hover:text-[#FCBA59] transition">
+                                {{ $headerPhoneNumber }}
+                            </span>
                         </a>
                     </div>
                     <div class="flex items-center gap-6 row-3 justify-end">
-                        @foreach ($leftNav as $item)
-                            <a href="{{ $item['url'] }}" class="min-w-28 hover:text-[#FCBA59] transition">
-                                {{ $item['label'] }}
-                            </a>
-                        @endforeach
-
-                        <div class="relative group">
-                            <button type="button" class="min-w-28 cursor-default hover:text-[#FCBA59] transition"
-                                aria-haspopup="true" aria-expanded="false">
-                                {{ $whatWeDoLabel }}
-                            </button>
-
-                            <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full mt-3 w-[320px] bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
-                                role="dialog" aria-label="{{ $whatWeDoLabel }}">
-                                <div class="h-1 bg-[#FCBA59]"></div>
-
-                                <div class="py-3">
-                                    @foreach ($whatWeDoItems as $subItem)
-                                        <a href="{{ $subItem['url'] }}"
-                                            class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
-                                            {{ $subItem['label'] }}
-                                        </a>
-                                    @endforeach
+                        @foreach ($leftItems as $item)
+                            @php $children = $getChildren($item->ID); @endphp
+                            @if (!empty($children))
+                                <div class="relative group">
+                                    <button type="button"
+                                        class="min-w-28 cursor-default hover:text-[#FCBA59] transition"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        {{ $item->title }}
+                                    </button>
+                                    <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full mt-3 w-[320px] bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
+                                        role="dialog" aria-label="{{ $item->title }}">
+                                        <div class="h-1 bg-[#FCBA59]"></div>
+                                        <div class="py-3">
+                                            @foreach ($children as $child)
+                                                <a href="{{ $child->url }}"
+                                                    class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
+                                                    {{ $child->title }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            @else
+                                <a href="{{ $item->url }}" class="min-w-28 hover:text-[#FCBA59] transition">
+                                    {{ $item->title }}
+                                </a>
+                            @endif
+                        @endforeach
                     </div>
 
                     <a href="{{ home_url('/') }}" class="flex items-center justify-center row-span-3"
@@ -142,10 +116,33 @@
                         @endforeach
                     </div>
                     <div class="flex items-center gap-6 row-3 col-start-3">
-                        @foreach ($rightNav as $item)
-                            <a href="{{ $item['url'] }}" class="min-w-28 hover:text-[#FCBA59] transition">
-                                {{ $item['label'] }}
-                            </a>
+                        @foreach ($rightItems as $item)
+                            @php $children = $getChildren($item->ID); @endphp
+                            @if (!empty($children))
+                                <div class="relative group">
+                                    <button type="button"
+                                        class="min-w-28 cursor-default hover:text-[#FCBA59] transition"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        {{ $item->title }}
+                                    </button>
+                                    <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full mt-3 w-[320px] bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
+                                        role="dialog" aria-label="{{ $item->title }}">
+                                        <div class="h-1 bg-[#FCBA59]"></div>
+                                        <div class="py-3">
+                                            @foreach ($children as $child)
+                                                <a href="{{ $child->url }}"
+                                                    class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
+                                                    {{ $child->title }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <a href="{{ $item->url }}" class="min-w-28 hover:text-[#FCBA59] transition">
+                                    {{ $item->title }}
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -155,34 +152,31 @@
 
     <div class="hidden md:hidden border-t border-white/10 bg-[#541D23]" data-mobile-menu>
         <nav class="px-6 py-6 space-y-4 text-white">
-            @foreach ($leftNav as $item)
-                <a href="{{ $item['url'] }}" class="block py-3 hover:text-[#FCBA59] transition">
-                    {{ $item['label'] }}
-                </a>
-            @endforeach
+            @foreach ($topLevelItems as $item)
+                @php $children = $getChildren($item->ID); @endphp
+                @if (!empty($children))
+                    <div class="py-3">
+                        <button type="button"
+                            class="w-full flex items-center justify-between text-left hover:text-[#FCBA59] transition"
+                            data-mobile-submenu-button aria-expanded="false">
+                            <span>{{ $item->title }}</span>
+                            <span aria-hidden="true">+</span>
+                        </button>
 
-            <div class="py-3">
-                <button type="button"
-                    class="w-full flex items-center justify-between text-left hover:text-[#FCBA59] transition"
-                    data-mobile-submenu-button aria-expanded="false">
-                    <span>{{ $whatWeDoLabel }}</span>
-                    <span aria-hidden="true">+</span>
-                </button>
-
-                <div class="hidden mt-3 ml-4 space-y-1 border-l border-white/10 pl-4" data-mobile-submenu>
-                    @foreach ($whatWeDoItems as $subItem)
-                        <a href="{{ $subItem['url'] }}"
-                            class="block py-2 text-sm text-white/70 hover:text-[#FCBA59] transition">
-                            {{ $subItem['label'] }}
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-
-            @foreach ($rightNav as $item)
-                <a href="{{ $item['url'] }}" class="block py-3 hover:text-[#FCBA59] transition">
-                    {{ $item['label'] }}
-                </a>
+                        <div class="hidden mt-3 ml-4 space-y-1 border-l border-white/10 pl-4" data-mobile-submenu>
+                            @foreach ($children as $child)
+                                <a href="{{ $child->url }}"
+                                    class="block py-2 text-sm text-white/70 hover:text-[#FCBA59] transition">
+                                    {{ $child->title }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ $item->url }}" class="block py-3 hover:text-[#FCBA59] transition">
+                        {{ $item->title }}
+                    </a>
+                @endif
             @endforeach
 
             <div class="pt-4 border-t border-white/10 space-y-4 text-sm text-white/70 flex flex-col">
@@ -194,18 +188,12 @@
                 </div>
 
                 <div class="inline-flex items-center gap-4 text-[#FCBA59]">
-                    @if ($headerFacebookUrl)
-                        <a href="{{ $headerFacebookUrl }}" aria-label="Facebook" class="hover:text-white transition"
-                            target="_blank" rel="noreferrer">Facebook</a>
-                    @endif
-                    @if ($headerInstagramUrl)
-                        <a href="{{ $headerInstagramUrl }}" aria-label="Instagram" class="hover:text-white transition"
-                            target="_blank" rel="noreferrer">Instagram</a>
-                    @endif
-                    @if ($headerTiktokUrl)
-                        <a href="{{ $headerTiktokUrl }}" aria-label="TikTok" class="hover:text-white transition"
-                            target="_blank" rel="noreferrer">TikTok</a>
-                    @endif
+                    @foreach ($headerSocialLinks as $socialLink)
+                        <a href="{{ $socialLink['social_link'] }}" aria-label="Social media link"
+                            class="hover:text-white transition" target="_blank" rel="noreferrer">
+                            {!! $socialLink['social_icon'] !!}
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </nav>

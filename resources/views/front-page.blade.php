@@ -111,6 +111,8 @@
         $heroText = get_field('hero_text') ?: $heroTextFallback;
 
         $servicesInput = get_field('front_services') ?: [];
+        $servicesRightButtonLabel = get_field('services_button_label') ?: 'View Gallery';
+        $servicesLeftButtonLabel = get_field('services_left_button_label') ?: 'Read more';
         $services = collect($servicesInput)
             ->map(function ($service, $index) use ($defaultServices, $imageUrl) {
                 $defaults = $defaultServices[$index] ?? [
@@ -273,14 +275,12 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <a href="{{ $service['read_more_link'] ?: '#' }}"
                                         class="inline-flex items-center justify-center h-12 bg-[#FCBA59] text-[#541D23] text-[16px] font-medium hover:opacity-90 transition rounded-sm">
-                                        {{-- TODO --}}
-                                        Read more
+                                        {{ $servicesRightButtonLabel }}
                                     </a>
 
                                     <a href="{{ $service['gallery_link'] ?: '#' }}"
                                         class="inline-flex items-center justify-center h-12 border-2 border-[#FCBA59] text-[#541D23] text-[16px] font-medium hover:bg-[#FCBA59] transition rounded-sm ">
-                                        {{-- TODO --}}
-                                        View Gallery
+                                        {{ $servicesLeftButtonLabel }}
                                     </a>
                                 </div>
                             </div>
