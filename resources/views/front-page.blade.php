@@ -17,14 +17,14 @@
                 'title' => 'Commercial Projects',
                 'image' => get_theme_file_uri('/resources/images/front-page-service.png'),
                 'items' => ['Restaurant and bar fit-outs', 'Hospitality space finishing and refurbishment'],
-                'read_more_link' => '#',
+                'read_more_link' => home_url('/commercial-projects'),
                 'gallery_link' => '#',
             ],
             [
                 'title' => 'Timber Construction',
                 'image' => get_theme_file_uri('/resources/images/front-page-service-2.png'),
                 'items' => ['Timber frame house construction', 'Wooden ceilings and structural timber work'],
-                'read_more_link' => '#',
+                'read_more_link' => home_url('/timber-construction'),
                 'gallery_link' => '#',
             ],
             [
@@ -38,7 +38,7 @@
                     'Fencing',
                     'Exterior cladding facade finishes',
                 ],
-                'read_more_link' => '#',
+                'read_more_link' => home_url('/outdoor-joinery-decking/'),
                 'gallery_link' => '#',
             ],
             [
@@ -53,7 +53,7 @@
                     'Kitchen fitting and installation',
                     'General carpentry and finishing work',
                 ],
-                'read_more_link' => '#',
+                'read_more_link' => home_url('/interior-joinery-finishing/'),
                 'gallery_link' => '#',
             ],
         ];
@@ -169,7 +169,7 @@
         $aboutText =
             get_field('about_text') ?:
             'At Joinery Atelier, we provide high-quality carpentry for holiday parks, developers, and private clients. From large-scale decking to bespoke interior installations, every project is delivered with precision and reliability. We focus on practical solutions and strict timelines. Our team also offers expert consultancy to refine designs, ensuring every structure is durable, functional, and built to a high standard.';
-        $aboutLink = get_field('about_link') ?: '#';
+        $aboutLink = get_field('about_link') ?: home_url('/about-us');
         $aboutButtonLabel = get_field('about_button_label') ?: 'Read more';
 
         $reviewsTitle = get_field('reviews_title') ?: 'Reviews';

@@ -193,3 +193,7 @@ add_action('template_redirect', function () {
 
     exit;
 });
+
+add_action('init', function () {
+    remove_post_type_support('page', 'editor');
+}, 100);
