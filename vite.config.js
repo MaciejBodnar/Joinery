@@ -4,7 +4,7 @@ import laravel from 'laravel-vite-plugin';
 import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
 
 export default defineConfig({
-  base: '/wp-content/themes/joinery-atelier/public/build/',
+  base: './',
   plugins: [
     tailwindcss(),
     laravel({

@@ -1,4 +1,5 @@
 import './accordion';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import './gallery';
 
 document.addEventListener('DOMContentLoaded', () => {

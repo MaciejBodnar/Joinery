@@ -195,6 +195,7 @@
     </style>
 
     @php wp_head() @endphp
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body @php body_class('maintenance-mode') @endphp>

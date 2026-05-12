@@ -79,16 +79,16 @@
                                     <button type="button"
                                         class="min-w-28 cursor-default hover:text-[#FCBA59] transition"
                                         aria-haspopup="true" aria-expanded="false">
-                                        {{ $item->title }}
+                                        {!! wp_kses_post(html_entity_decode($item->title)) !!}
                                     </button>
                                     <div class="invisible opacity-0 translate-y-3 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full mt-3 w-[320px] bg-[#EFEAE8] text-[#541D23] shadow-xl transition duration-200"
-                                        role="dialog" aria-label="{{ $item->title }}">
+                                        role="dialog" aria-label="{{ esc_attr(html_entity_decode($item->title)) }}">
                                         <div class="h-1 bg-[#FCBA59]"></div>
                                         <div class="py-3">
                                             @foreach ($children as $child)
                                                 <a href="{{ $child->url }}"
                                                     class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
-                                                    {{ $child->title }}
+                                                    {!! wp_kses_post(html_entity_decode($child->title)) !!}
                                                 </a>
                                             @endforeach
                                         </div>
@@ -96,7 +96,7 @@
                                 </div>
                             @else
                                 <a href="{{ $item->url }}" class="min-w-28 hover:text-[#FCBA59] transition">
-                                    {{ $item->title }}
+                                    {!! wp_kses_post(html_entity_decode($item->title)) !!}
                                 </a>
                             @endif
                         @endforeach
@@ -132,7 +132,7 @@
                                             @foreach ($children as $child)
                                                 <a href="{{ $child->url }}"
                                                     class="min-w-28 block px-6 py-3 text-base hover:bg-white hover:text-[#541D23] transition">
-                                                    {{ $child->title }}
+                                                    {!! wp_kses_post(html_entity_decode($child->title)) !!}
                                                 </a>
                                             @endforeach
                                         </div>
@@ -159,7 +159,7 @@
                         <button type="button"
                             class="w-full flex items-center justify-between text-left hover:text-[#FCBA59] transition"
                             data-mobile-submenu-button aria-expanded="false">
-                            <span>{{ $item->title }}</span>
+                            <span>{!! wp_kses_post(html_entity_decode($item->title)) !!}</span>
                             <span aria-hidden="true">+</span>
                         </button>
 
@@ -167,14 +167,14 @@
                             @foreach ($children as $child)
                                 <a href="{{ $child->url }}"
                                     class="block py-2 text-sm text-white/70 hover:text-[#FCBA59] transition">
-                                    {{ $child->title }}
+                                    {!! wp_kses_post(html_entity_decode($child->title)) !!}
                                 </a>
                             @endforeach
                         </div>
                     </div>
                 @else
                     <a href="{{ $item->url }}" class="block py-3 hover:text-[#FCBA59] transition">
-                        {{ $item->title }}
+                        {!! wp_kses_post(html_entity_decode($item->title)) !!}
                     </a>
                 @endif
             @endforeach
